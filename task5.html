@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Application</title>
+</head>
+<body>
+  <p>1. Which country won the FIFA World Cup in 2022?</p>
+
+  <input type="radio" name="q1" value="A"> France<br>
+  <input type="radio" name="q1" value="B"> Argentina<br>
+  <input type="radio" name="q1" value="C"> Brazil<br>
+  <input type="radio" name="q1" value="D"> Germany<br>
+
+  <p>2. Which player has won the most Ballon d'Or awards?</p>
+
+  <input type="radio" name="q2" value="A"> Cristiano Ronaldo<br>
+  <input type="radio" name="q2" value="B"> Lionel Messi<br>
+  <input type="radio" name="q2" value="C"> Zinedine Zidane<br>
+  <input type="radio" name="q2" value="D"> Ronaldinho<br>
+
+  <p>3. How many players does each team have on the field at the start of a football match?</p>
+
+  <input type="radio" name="q3" value="A"> 9<br>
+  <input type="radio" name="q3" value="B"> 10<br>
+  <input type="radio" name="q3" value="C"> 11<br>
+  <input type="radio" name="q3" value="D"> 12<br>
+
+  <p>4. Which club is known as "The Red Devils"?</p>
+
+  <input type="radio" name="q4" value="A"> Liverpool<br>
+  <input type="radio" name="q4" value="B"> Manchester United<br>
+  <input type="radio" name="q4" value="C"> Arsenal<br>
+  <input type="radio" name="q4" value="D"> Chelsea<br>
+
+  <p>5. Which country has won the most FIFA World Cups?</p>
+
+  <input type="radio" name="q5" value="A"> Argentina<br>
+  <input type="radio" name="q5" value="B"> Germany<br>
+  <input type="radio" name="q5" value="C"> Brazil<br>
+  <input type="radio" name="q5" value="D"> Italy<br>
+
+  <br>
+  <button id="submitButton">Submit</button>
+  <h2 id="passorFailText"></h2>
+  <h3 id="resultsText"></h3>
+
+  <script>
+    let submitButton = document.getElementById("submitButton");
+    let passorFailText = document.getElementById("passorFailText");
+    let resultsText = document.getElementById("resultsText");
+
+    let answers = [];
+    let totalScore = 0;
+    let correctAnswers = 0;
+    let wrongAnswers = 0;
+
+    submitButton.addEventListener("click", function(){
+    answers = [];
+    totalScore = 0;
+    correctAnswers = 0;
+    wrongAnswers = 0;
+    let answerOne = document.querySelector('input[name="q1"]:checked')?.value; // optional chaining operator to prevent error when nothing is checked
+    let answerTwo = document.querySelector('input[name="q2"]:checked')?.value;
+    let answerThree = document.querySelector('input[name="q3"]:checked')?.value;
+    let answerFour = document.querySelector('input[name="q4"]:checked')?.value;
+    let answerFive = document.querySelector('input[name="q5"]:checked')?.value;
+
+    answers.push(answerOne);
+    answers.push(answerTwo);
+    answers.push(answerThree);
+    answers.push(answerFour);
+    answers.push(answerFive);
+
+    checkAnswers();
+    });
+
+    function checkAnswers(){
+        if(answers[0] === 'B'){ // first number
+          totalScore++;
+          correctAnswers++;
+        } else {
+          wrongAnswers++;
+        }
+
+        if(answers[1] === 'B'){ // second number
+          totalScore++;
+          correctAnswers++;
+        } else {
+          wrongAnswers++;
+        }
+
+        if(answers[2] === 'C'){ // third number
+          totalScore++;
+          correctAnswers++;
+        } else {
+          wrongAnswers++;
+        }
+
+        if(answers[3]=== 'B'){ // fourth number
+          totalScore++;
+          correctAnswers++;
+        } else {
+          wrongAnswers++;
+        }
+
+        if(answers[4] === 'C'){ // fifth number
+          totalScore++;
+          correctAnswers++;
+        } else {
+          wrongAnswers++;
+        }
+
+        checkPassOrFail(correctAnswers);
+      }
+
+    function checkPassOrFail(correctAnswers){
+      let totalQuestions = 5;
+      let percentage = (correctAnswers /  totalQuestions) * 100
+      if(percentage >= 60){
+        passorFailText.innerHTML = "You passed!";
+      } else {
+        passorFailText.innerHTML = "You failed!";
+      }
+      resultsText.innerHTML = `Total score is ${totalScore} out of ${totalQuestions}, number of correct answers is ${correctAnswers}, number of wrong answers is ${wrongAnswers}, and percentage is ${percentage}`;
+    }
+    
+  </script>
+</body>
+</html>

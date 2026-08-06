@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supermarket Billing System</title>
+</head>
+<body>
+  <form>
+    <input type="text" id="productName" placeholder="Enter product name">
+    <input type="number" id="quantity" placeholder="Enter quantity">
+    <input type="number" id="price" placeholder="Enter price for item">
+    <button id="calculate">Calculate</button>
+
+    <p id="results"></p>
+
+    <script>
+      let productName = document.getElementById("productName");
+      let quantity = document.getElementById("quantity");
+      let price = document.getElementById("price");
+      let calculateBtn = document.getElementById("calculate");
+
+      let results = document.getElementById("results");
+    
+      productName.value = localStorage.getItem("productName") || "";
+
+      
+      calculateBtn.addEventListener("click", function(event){
+        event.preventDefault();
+
+        let productNameValue = productName.value;
+        let quantityValue = parseInt(quantity.value);
+        let priceValue = parseInt(price.value);
+
+        let totalPrice = quantityValue * priceValue;
+        let discountedPrice = totalPrice;
+
+        if(totalPrice > 50000){
+        discountedPrice = totalPrice * 0.9;
+
+        results.innerHTML = `
+        The total price for ${productNameValue} is ${totalPrice} RWF.
+        Discounted price is ${discountedPrice} RWF.`;
+        } else {
+        results.innerHTML = `The total price for ${productNameValue} is ${totalPrice} RWF. No discount was applied.`;
+        }
+
+        localStorage.setItem("productName", productNameValue);
+        localStorage.setItem("totalPrice", totalPrice);
+        localStorage.setItem("discountedPrice", discountedPrice);
+});
+    </script>
+  </form>
+</body>
+</html>

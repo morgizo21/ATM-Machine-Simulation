@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATM Machine Simulation</title>
+</head>
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .homepage{
+    background-color: bisque;
+    color:black;
+    display: none;
+    border-radius: 10px;
+    padding: 90px;
+    justify-content: center;
+  }
+  #pin{
+    padding: 10px;
+    width: 200px;
+    border-radius: 10px;
+    border-color: aqua;
+  }
+  #checkPin{
+    margin-top: 10px;
+    padding: 8px;
+    width: 150px;
+    border: none;
+    background-color: rgb(226, 211, 43);
+    border-radius: 40px;
+    cursor: pointer;
+    color: white;
+  }
+  #checkPin:hover{
+    background-color: blue;
+  }
+  #dashboard{
+  box-shadow: 3px 3px 8px rgb(105, 216, 105);
+  width: 300px;
+  height: auto;
+  border: 4px;
+  background-color: rgb(209, 209, 138);
+  padding: 10px;
+  border-radius: 10px;
+  }
+  #deposit{
+    background-color: rgb(59, 165, 110);
+    width: 70px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 5px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    color: aliceblue;
+  }
+  #withdraw{
+    background-color: rgb(208, 108, 88);
+    width: 70px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 5px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    color: aliceblue;
+  }
+  #balance{
+    background-color: rgb(100, 202, 197);
+    width: 70px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 5px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    color: aliceblue;
+  }
+  #logoutBtn{
+    background-color: rgb(101, 101, 245);
+    width: 70px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 5px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    color: aliceblue;
+  }
+
+  #displayBalance{
+    padding: 10px;
+    border: solid;
+    border-color: rgb(99, 172, 113);
+    border-radius: 10px;
+  }
+
+  #amount{
+    padding: 10px;
+    border: solid;
+    border-radius: 10px;
+    border-color: rgb(77, 189, 163);
+  }
+</style>
+<body>
+  <div class="homepage" id="homepage">
+    <input type="number" id="pin" placeholder="Enter the correct PIN">
+    <button id="checkPin">Check Pin</button>
+  </div>
+  <div class="dashboard" id="dashboard">
+    <input type="number" id="amount" placeholder="Enter amount">
+    <button id="deposit">Deposit</button>
+    <button id="withdraw">Withdraw</button>
+    <button id="balance">Check Balance</button>
+    <p id="displayBalance"></p>
+    <button id="logoutBtn">logout</button>
+  </div>
+  
+  <script>
+    let pin = document.getElementById("pin");
+    let amount = document.getElementById("amount");
+    let checkPinBtn = document.getElementById("checkPin");
+
+    let balanceBtn = document.getElementById("balance");
+    let depositBtn = document.getElementById("deposit");
+    let withdrawBtn = document.getElementById("withdraw");
+
+    let balanceParagraph = document.getElementById("displayBalance");
+
+    let homepage=document.getElementById("homepage");
+
+    let logoutBtn = document.getElementById("logoutBtn");
+
+    let dashboard = document.getElementById("dashboard"); 
+
+    let pinValue = JSON.parse(localStorage.getItem("pin"));
+
+    if(pinValue){
+        dashboard.style.display = "block";
+        balanceBtn.style.display = "block";
+        depositBtn.style.display = "block";
+        withdrawBtn.style.display = "block";
+        amount.style.display = "block";
+        logoutBtn.style.display = "block";
+        homepage.style.display = "none";
+        pin.style.display = "none";
+        checkPinBtn.style.display = "none";
+    } else {
+        balanceBtn.style.display = "none";
+        depositBtn.style.display = "none";
+        withdrawBtn.style.display = "none";
+        amount.style.display = "none";
+        logoutBtn.style.display = "none";
+        dashboard.style.display = "none";
+        homepage.style.display = "block";
+        pin.style.display = "block";
+        checkPinBtn.style.display = "block";
+    }
+    
+    checkPinBtn.addEventListener("click", function(){
+      if(parseInt(pin.value) === 1234){
+
+        localStorage.setItem("pin", JSON.stringify(pin.value))
+
+        dashboard.style.display = "block";
+        balanceBtn.style.display = "block";
+        depositBtn.style.display = "block";
+        withdrawBtn.style.display = "block";
+        amount.style.display = "block";
+        logoutBtn.style.display = "block";
+        homepage.style.display = "none";
+        pin.style.display = "none";
+        checkPinBtn.style.display = "none";
+      
+      } else {
+        alert("Invalid PIN");
+      }
+    });
+
+    depositBtn.addEventListener("click", function(){
+      let balanceValue = JSON.parse(localStorage.getItem("balance"));
+      amountValue = parseInt(amount.value);
+
+      balanceValue = balanceValue + amountValue;
+
+      localStorage.setItem("balance", balanceValue);
+
+      balanceParagraph.innerText = `Current balance is ${balanceValue} rwf`;
+    });
+
+    withdrawBtn.addEventListener("click", function(){
+      let balanceValue = JSON.parse(localStorage.getItem("balance"));
+      amountValue = parseInt(amount.value);
+
+      if (amountValue > balanceValue){
+        alert("insufficient balance")
+      } else {
+        balanceValue = balanceValue - amountValue;
+
+        localStorage.setItem("balance", balanceValue);
+        
+        balanceParagraph.innerText = `Current balance is ${balanceValue} rwf`;
+      }
+    });
+
+    balanceBtn.addEventListener("click", function(){
+      let balanceValue = JSON.parse(localStorage.getItem("balance"));
+      balanceParagraph.innerText = `Current balance is ${balanceValue} rwf`;
+    });
+
+    logoutBtn.addEventListener("click", function(){
+        localStorage.removeItem("pin");
+
+        balanceBtn.style.display = "none";
+        depositBtn.style.display = "none";
+        withdrawBtn.style.display = "none";
+        amount.style.display = "none";
+        logoutBtn.style.display = "none";
+        dashboard.style.display = "none";
+        homepage.style.display = "block";
+        pin.style.display = "block";
+        checkPinBtn.style.display = "block";
+    })
+
+    
+  </script>
+</body>
+</html>
