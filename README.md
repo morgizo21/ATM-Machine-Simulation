@@ -2,6 +2,12 @@
 
 A basic browser-based ATM simulation built using HTML, CSS, and vanilla JavaScript. This project was developed during my front-end development training at Mastery Hub Rwanda in August 2026.
 
+## Live Demo
+
+[Try ATM Machine Simulation](https://atm-machine-simulation-eight.vercel.app/)
+
+Demo PIN: `1234`
+
 ## Features
 
 - PIN verification
